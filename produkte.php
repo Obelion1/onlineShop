@@ -28,20 +28,26 @@
     </form>
   </article>
 
-<div>
-<h2>Brot</h2>
-<p> es ist ein Brot </p>
-<p> Preis: 2€ </p>
-<button>add to cart</button>
-</div>
+  <article>
+    <h2>Brot</h2>
+    <p>Preis: €2</p>
+    <p>Es ist ein Brot! </p>
+    <form action="warenkorb.php" method="POST">
+      <input type="hidden" name="bezeichnung" value="Brot">
+      <input type="hidden" name="beschreibung" value="Grundnahrungsmittel der deutschen">
+      <input type="hidden" name="preis" value="2">
+      <button type="submit">Add to cart</button>
+    </form>
+  </article>
 
-<article>
-    <h2>Cool T-Shirt</h2>
-    <p>Price: €19.99</p>
-    <form action="cart.php" method="POST">
-      <input type="hidden" name="product_id" value="shirt123">
-      <input type="hidden" name="product_name" value="Cool T-Shirt">
-      <input type="hidden" name="product_price" value="19.99">
+  <article>
+    <h2>Bier</h2>
+    <p>Preis: €3</p>
+    <p>Ein frischgezapftes kühles blondes</p>
+    <form action="warenkorb.php" method="POST">
+      <input type="hidden" name="bezeichnung" value="Bier">
+      <input type="hidden" name="beschreibung" value="ein weiteres Grundnahrungsmittel der deutschen">
+      <input type="hidden" name="preis" value="3">
       <button type="submit">Add to cart</button>
     </form>
   </article>
