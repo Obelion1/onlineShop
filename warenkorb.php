@@ -21,27 +21,45 @@ if (!isset($_SESSION['einkaufswagen'])) {
     $_SESSION['einkaufswagen'] = [];
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bezeichnung'])) {
     $_SESSION['einkaufswagen'][] = [
-        'bezeichnung'    => $_POST['bezeichnung'],
+        'bezeichnung'   => $_POST['bezeichnung'],
         'beschreibung'  => $_POST['beschreibung'],
-        'preis' => $_POST['preis']
+        'preis'         => floatval($_POST['preis'])  // make sure it's numeric
     ];
 }
 
+// checkout pressed?
+$total = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
+    $sum = 0;
+    foreach ($_SESSION['einkaufswagen'] as $item) {
+        $sum += $item['preis'];
+    }
+    $total = $sum;
+}
 ?>
 
 <?php if (empty($_SESSION['einkaufswagen'])): ?>
     <p>Ihr Warenkorb ist leer.</p>
-  <?php else: ?>
+<?php else: ?>
     <ul>
       <?php foreach ($_SESSION['einkaufswagen'] as $item): ?>
         <li>
-          <?= htmlspecialchars($item['bezeichnung']) ?> — 
-          €<?= htmlspecialchars($item['preis']) ?>
+          <?= htmlspecialchars($item['bezeichnung']) ?> —
+          €<?= number_format($item['preis'], 2, ',', '.') ?>
         </li>
       <?php endforeach; ?>
     </ul>
-  <?php endif; ?>
+
+    <!-- Checkout button -->
+    <form method="post">
+        <button type="submit" name="checkout">Bezahlen</button>
+    </form>
+
+    <?php if ($total !== null): ?>
+        <p><strong>Total: €<?= number_format($total, 2, ',', '.') ?></strong></p>
+    <?php endif; ?>
+<?php endif; ?>
 </body>
 </html>
